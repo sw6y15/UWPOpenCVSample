@@ -94,9 +94,9 @@
                             <DataTemplate x:Name="AlgorithmParameterTemplate" x:DataType="local:AlgorithmProperty">
                                 <StackPanel Margin="0,0,0,50">
                                     <TextBlock Text="{x:Bind ParameterName}" FontWeight="Bold" FontSize="20"/>
-                                    <TextBlock Text="Description: " Visibility="{x:Bind SettingVisibility}"/>
-                                    <TextBlock Text="{x:Bind Description}" TextWrapping="Wrap" FontStyle="Italic" Visibility="{x:Bind SettingVisibility}"/>
-                                    <Grid Visibility="{x:Bind SettingVisibility}">
+                                    <TextBlock Text="Description: " Visibility="{x:Bind DetailsVisibility}"/>
+                                    <TextBlock Text="{x:Bind Description}" TextWrapping="Wrap" FontStyle="Italic" Visibility="{x:Bind DetailsVisibility}"/>
+                                    <Grid Visibility="{x:Bind DetailsVisibility}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="125"/>
                                             <ColumnDefinition Width="25"/>
@@ -109,8 +109,10 @@
                                         <TextBlock Grid.Column="3" Text="{x:Bind MinValue}"/>
                                     </Grid>
                                     <TextBlock Text="{x:Bind CurrentStringValue}" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
-                                    <Slider Visibility="{x:Bind SettingVisibility}" Minimum="{x:Bind MinValue}" Maximum="{x:Bind MaxValue}" IsEnabled="{x:Bind IsEnable}" Tag="{x:Bind Tag}"
+                                    <Slider Visibility="{x:Bind SliderVisibility}" Minimum="{x:Bind MinValue}" Maximum="{x:Bind MaxValue}" IsEnabled="{x:Bind IsSliderEnable}" Tag="{x:Bind Tag}"
                                                     Value="{x:Bind CurrentDoubleValue}" ValueChanged="Slider1_ValueChanged" HorizontalAlignment="Stretch"/>
+                                    <ComboBox Header="List:" ItemsSource="{x:Bind ParamList}" SelectionChanged="ComboBox_SelectionChanged"  Visibility="{x:Bind ComboBoxVisibility}"
+                                              IsEnabled="{x:Bind IsComboBoxEnable}" SelectedIndex="{x:Bind CurrentIntValue}" Tag="{x:Bind Tag}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

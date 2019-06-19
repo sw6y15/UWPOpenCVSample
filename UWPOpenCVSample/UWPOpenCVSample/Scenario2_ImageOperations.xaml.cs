@@ -143,6 +143,7 @@ namespace UWPOpenCVSample
                         }
                         else if (currentOperation == OperationType.Contours)
                         {
+                            _helper.Contours(originalBitmap, outputBitmap, _storeditem);
                         }
                         else if (currentOperation == OperationType.Histogram)
                         {
@@ -206,15 +207,15 @@ namespace UWPOpenCVSample
 
         private async void Slider1_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (_storeditem != null && _storedProperty != null && _storedProperty.IsEnable)
+            if (_storeditem != null && _storedProperty != null)
             {
-                var res = sender as Slider;
-                if (res.Tag?.ToString() != _storedProperty.ParameterName) return;
                 if (_storedProperty.isInitialize)
                 {
+                    var res = sender as Slider;
+                    if (res.Tag?.ToString() != _storedProperty.ParameterName) return;
                     _storedProperty.CurrentValue = res.Value;
                     UpdateStoredAlgorithm(currentOperation, _storedProperty);
-                    if (_cacheFrame!=null) await ProcessWithOpenCV(_cacheFrame);
+                    if (_cacheFrame != null) await ProcessWithOpenCV(_cacheFrame);
                 }
                 else
                 {
@@ -278,10 +279,10 @@ namespace UWPOpenCVSample
         {
             if (OperationType.Blur == operationType)
             {
-                if (algorithmProperty.ParameterName == "ksize")
+                if (algorithmProperty.ParameterName == "Ksize")
                 {
                     _storeditem.updateCurrentValue(algorithmProperty);
-                    _storeditem.updateProperty("anchor", AlgorithmPropertyType.maxValue, algorithmProperty.CurrentDoubleValue);
+                    _storeditem.updateProperty("Anchor", AlgorithmPropertyType.maxValue, algorithmProperty.CurrentDoubleValue);
                 }
                 else
                 {
@@ -475,6 +476,29 @@ namespace UWPOpenCVSample
             });
         }
 
-
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_storeditem != null && _storedProperty != null)
+            {
+                if (_storedProperty.isInitialize)
+                {
+                    var combo = sender as ComboBox;
+                    var selectIdx = combo.SelectedIndex;
+                    if (combo.Tag?.ToString() != _storedProperty.ParameterName) return;
+                    _storedProperty.CurrentValue = (double)selectIdx;
+                    UpdateStoredAlgorithm(currentOperation, _storedProperty);
+                    if (_cacheFrame != null) await ProcessWithOpenCV(_cacheFrame);
+                }
+                else
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        // initialize slider
+                        collection.ItemsSource = Algorithm.GetObjects(_storeditem);
+                        _storedProperty.isInitialize = true;
+                    });
+                }
+            }
+        }
     }
 }

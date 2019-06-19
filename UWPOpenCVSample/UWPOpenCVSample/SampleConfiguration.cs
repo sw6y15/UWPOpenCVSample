@@ -27,9 +27,9 @@ namespace UWPOpenCVSample
                 algorithmProperties = new List<AlgorithmProperty>()
                 {
                     //Cv2.Blur()
-                    new AlgorithmProperty(0,typeof(Size),"ksize","A Size object representing the size of the kernel.",480,1,5),
-                    new AlgorithmProperty(1,typeof(Point),"anchor","A variable of the type integer representing the anchor point.",5,1,3),
-                    new AlgorithmProperty(2,typeof(BorderTypes),"borderType","A variable of the type integer representing the type of the border to be used to the output.",7,0,0),
+                    new AlgorithmProperty(0,typeof(Size),"Ksize","A Size object representing the size of the kernel.",480,1,5),
+                    new AlgorithmProperty(1,typeof(Point),"Anchor","A variable of the type integer representing the anchor point.",5,1,3),
+                    new AlgorithmProperty(2,typeof(BorderTypes),"BorderType","A variable of the type integer representing the type of the border to be used to the output.",7,0,0),
                 }
             },
             new Algorithm()
@@ -40,14 +40,14 @@ namespace UWPOpenCVSample
                 {
                     //Cv2.HoughLinesP()
                     //Cv2.Line()
-                    new AlgorithmProperty(0,typeof(double),"rho","A variable of the type double representing the resolution of the parameter r in pixels.",480,1,1),
-                    new AlgorithmProperty(1,typeof(double),"theta","A variable of the type double representing the resolution of the parameter Φ in radians.",157,1,1),
-                    new AlgorithmProperty(2,typeof(int),"threshold","A variable of the type integer representing the minimum number of intersections to “detect” a line.",480,1,10),
-                    new AlgorithmProperty(3,typeof(double),"minLineLength","The minimum line length. Line segments shorter than that will be rejected. [By default this is 0]",480,0,0),
-                    new AlgorithmProperty(4,typeof(double),"maxLineGap","The maximum allowed gap between points on the same line to link them. [By default this is 0]",480,0,0),
-                    new AlgorithmProperty(5,typeof(Scalar),"color","Line color.",255,0,0),
-                    new AlgorithmProperty(6,typeof(int),"thickness","Line thickness. [By default this is 1]",10,0,1),
-                    new AlgorithmProperty(7,typeof(LineTypes),"lineType","Type of the line. [By default this is LineType.Link8]",2,0,1),
+                    new AlgorithmProperty(0,typeof(double),"Rho","A variable of the type double representing the resolution of the parameter r in pixels.",100,1,1),
+                    new AlgorithmProperty(1,typeof(double),"Theta","A variable of the type double representing the resolution of the parameter Φ in radians.",157,1,1),
+                    new AlgorithmProperty(2,typeof(int),"Threshold","A variable of the type integer representing the minimum number of intersections to “detect” a line.",100,1,10),
+                    new AlgorithmProperty(3,typeof(double),"MinLineLength","The minimum line length. Line segments shorter than that will be rejected. [By default this is 0]",50,0,0),
+                    new AlgorithmProperty(4,typeof(double),"MaxLineGap","The maximum allowed gap between points on the same line to link them. [By default this is 0]",50,0,0),
+                    new AlgorithmProperty(5,typeof(Scalar),"Color","Line color.",255,0,0),
+                    new AlgorithmProperty(6,typeof(int),"Thickness","Line thickness. [By default this is 1]",10,0,1),
+                    new AlgorithmProperty(7,typeof(LineTypes),"LineTypes","Type of the line. [By default this is LineType.Link8]",2,0,1),
                 }
             },
             new Algorithm()
@@ -57,9 +57,12 @@ namespace UWPOpenCVSample
                 AlgorithmName ="Contours",
                 algorithmProperties = new List<AlgorithmProperty>()
                 {
-                    new AlgorithmProperty(0,typeof(double),"threshold1"),
-                    new AlgorithmProperty(1,typeof(double),"threshold2"),
-                    new AlgorithmProperty(2,typeof(double),"threshold3"),
+                    new AlgorithmProperty(0,typeof(RetrievalModes),"RetrievalModes","Contour retrieval mode.",4,0,0),
+                    new AlgorithmProperty(1,typeof(ContourApproximationModes),"ContourApproximationModes","Contour approximation method",3,0,0),
+                    new AlgorithmProperty(2,typeof(Point),"Offset","Optional offset by which every contour point is shifted. This is useful if the contours are extracted from the image ROI and then they should be analyzed in the whole image context. ",10,0,0),
+                    new AlgorithmProperty(3,typeof(Scalar),"Color","Line color.",255,0,0),
+                    new AlgorithmProperty(4,typeof(int),"Thickness","Line thickness. [By default this is 1]",10,0,1),
+                    new AlgorithmProperty(5,typeof(LineTypes),"LineTypes","Type of the line. [By default this is LineType.Link8]",2,0,1),
                 }
             },
             new Algorithm()

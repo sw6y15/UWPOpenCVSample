@@ -230,17 +230,48 @@ namespace UWPOpenCVSample
             {
                 if (algorithmProperties[i].ParameterName == ParamName)
                 {
-                    if (algorithmProperties[i].IsEnable == false)
+                    if (algorithmProperties[i].IsComboBoxEnable)
                     {
-                        algorithmProperties[i].IsEnable = true;
-                        algorithmProperties[i].isInitialize = false;
-                        algorithmProperties[i].SettingVisibility = Visibility.Visible; 
+                        if(algorithmProperties[i].ComboBoxVisibility== Visibility.Visible)
+                        {
+                            algorithmProperties[i].ComboBoxVisibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            algorithmProperties[i].ComboBoxVisibility = Visibility.Visible;
+                        }
+                    }
+                    if(algorithmProperties[i].IsSliderEnable)
+                    {
+                        if (algorithmProperties[i].SliderVisibility == Visibility.Visible)
+                        {
+                            algorithmProperties[i].SliderVisibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            algorithmProperties[i].SliderVisibility = Visibility.Visible;
+                        }
+                    }
+
+                    if (algorithmProperties[i].DetailsVisibility == Visibility.Visible)
+                    {
+                        algorithmProperties[i].DetailsVisibility = Visibility.Collapsed;
                     }
                     else
                     {
-                        algorithmProperties[i].IsEnable = false;
-                        algorithmProperties[i].SettingVisibility = Visibility.Collapsed;
+                        algorithmProperties[i].DetailsVisibility = Visibility.Visible;
                     }
+                    //if (algorithmProperties[i].IsEnable == false)
+                    //{
+                    //    algorithmProperties[i].IsEnable = true;
+                    //    algorithmProperties[i].isInitialize = false;
+                    //    algorithmProperties[i].SettingVisibility = Visibility.Visible; 
+                    //}
+                    //else
+                    //{
+                    //    algorithmProperties[i].IsEnable = false;
+                    //    algorithmProperties[i].SettingVisibility = Visibility.Collapsed;
+                    //}
                 }
             }
         }
@@ -248,8 +279,9 @@ namespace UWPOpenCVSample
         {
             foreach(var ap in algorithmProperties)
             {
-                ap.SettingVisibility = Visibility.Collapsed;
-                ap.IsEnable = false;
+                ap.DetailsVisibility = Visibility.Collapsed;
+                ap.SliderVisibility = Visibility.Collapsed;
+                ap.ComboBoxVisibility = Visibility.Collapsed;
                 ap.isInitialize = false;
             }
         }
@@ -325,99 +357,125 @@ namespace UWPOpenCVSample
         }
 
         // Value setting panel visibility
-        private Visibility settingVisibility;
-        public Visibility SettingVisibility
+        private Visibility sliderVisibility;
+        public Visibility SliderVisibility
         {
-            get { return settingVisibility; }
+            get { return sliderVisibility; }
             set
             {
-                settingVisibility = value;
-                NotifyPropertyChanged("SettingVisibility");
+                sliderVisibility = value;
+                NotifyPropertyChanged("SliderVisibility");
             }
         }
 
+        // Value setting panel visibility
+        private Visibility comboBoxVisibility;
+        public Visibility ComboBoxVisibility
+        {
+            get { return comboBoxVisibility; }
+            set
+            {
+                comboBoxVisibility = value;
+                NotifyPropertyChanged("ComboBoxVisibility");
+            }
+        }
 
+        // Value setting panel visibility
+        private Visibility detailsVisibility;
+        public Visibility DetailsVisibility
+        {
+            get { return detailsVisibility; }
+            set
+            {
+                detailsVisibility = value;
+                NotifyPropertyChanged("DetailsVisibility");
+            }
+        }
         // Current value of the parameter
         private double currentValue;
         public object CurrentValue
         {
             get
             {
-                if (type == typeof(int))
+                if (ParamType== typeof(int))
                 {
                     return (int)currentValue;
                 }
-                else if (type == typeof(double))
+                else if (ParamType == typeof(double))
                 {
                     return currentValue;
                 }
-                else if (type == typeof(OpenCvSharp.Size))
+                else if (ParamType == typeof(OpenCvSharp.Size))
                 {
                     var res = new OpenCvSharp.Size((int)currentValue, (int)currentValue);
                     return res;
                 }
-                else if (type == typeof(LineTypes))
-                {
-                    if ((int)currentValue == 0)
-                    {
-                        return LineTypes.Link4;
-                    }
-                    else if ((int)currentValue == 1)
-                    {
-                        return LineTypes.Link8;
-                    }
-                    else if ((int)currentValue == 2)
-                    {
-                        return LineTypes.AntiAlias;
-                    }
-                    else
-                    {
-                        return LineTypes.Link4;
-                    }
-                }
-                else if (type == typeof(BorderTypes))
-                {
-                    if ((int)currentValue == 0)
-                    {
-                        return BorderTypes.Constant;
-                    }
-                    else if ((int)currentValue == 1)
-                    {
-                        return BorderTypes.Replicate;
-                    }
-                    else if ((int)currentValue == 2)
-                    {
-                        return BorderTypes.Reflect;
-                    }
-                    else if ((int)currentValue == 3)
-                    {
-                        return BorderTypes.Wrap;
-                    }
-                    else if ((int)currentValue == 4)
-                    {
-                        return BorderTypes.Reflect101;
-                    }
-                    else if ((int)currentValue == 5)
-                    {
-                        return BorderTypes.Transparent;
-                    }
-                    else if ((int)currentValue == 6)
-                    {
-                        return BorderTypes.Isolated;
-                    }
-                    else
-                    {
-                        return BorderTypes.Default;
-                    }
-                }
-                else if (type == typeof(Scalar))
+                //else if (ParamType == typeof(LineTypes))
+                //{
+                //    if ((int)currentValue == 0)
+                //    {
+                //        return LineTypes.Link4;
+                //    }
+                //    else if ((int)currentValue == 1)
+                //    {
+                //        return LineTypes.Link8;
+                //    }
+                //    else if ((int)currentValue == 2)
+                //    {
+                //        return LineTypes.AntiAlias;
+                //    }
+                //    else
+                //    {
+                //        return LineTypes.Link4;
+                //    }
+                //}
+                //else if (ParamType == typeof(BorderTypes))
+                //{
+                //    if ((int)currentValue == 0)
+                //    {
+                //        return BorderTypes.Constant;
+                //    }
+                //    else if ((int)currentValue == 1)
+                //    {
+                //        return BorderTypes.Replicate;
+                //    }
+                //    else if ((int)currentValue == 2)
+                //    {
+                //        return BorderTypes.Reflect;
+                //    }
+                //    else if ((int)currentValue == 3)
+                //    {
+                //        return BorderTypes.Wrap;
+                //    }
+                //    else if ((int)currentValue == 4)
+                //    {
+                //        return BorderTypes.Reflect101;
+                //    }
+                //    else if ((int)currentValue == 5)
+                //    {
+                //        return BorderTypes.Transparent;
+                //    }
+                //    else if ((int)currentValue == 6)
+                //    {
+                //        return BorderTypes.Isolated;
+                //    }
+                //    else
+                //    {
+                //        return BorderTypes.Default;
+                //    }
+                //}
+                else if (ParamType == typeof(Scalar))
                 {
                     return (Scalar)currentValue;
                 }
-                else if (type == typeof(OpenCvSharp.Point))
+                else if (ParamType == typeof(OpenCvSharp.Point))
                 {
                     var res = new OpenCvSharp.Point(currentValue, currentValue);
                     return res;
+                }
+                else if (ParamType?.BaseType == typeof(Enum))
+                {
+                    return ParamList[CurrentIntValue];
                 }
                 else
                 {
@@ -429,6 +487,14 @@ namespace UWPOpenCVSample
                 currentValue = (double)value;
                 CurrentDoubleValue = (double)value;
                 CurrentStringValue = CurrentValue.ToString();
+                if (ParamType?.BaseType == typeof(Enum))
+                {
+                    CurrentIntValue = Convert.ToInt32(value);
+                }
+                else
+                {
+                    CurrentIntValue = 0;
+                }
                 NotifyPropertyChanged("CurrentValue");
             }
         }
@@ -461,6 +527,20 @@ namespace UWPOpenCVSample
             }
         }
 
+        private int currentIntValue;
+        public int CurrentIntValue
+        {
+            get
+            {
+                return currentIntValue;
+            }
+            set
+            {
+                currentIntValue = value;
+                NotifyPropertyChanged("CurrentIntValue");
+            }
+        }
+
         // Maximum value of the parameter
         private double maxValue;
         public double MaxValue
@@ -485,16 +565,28 @@ namespace UWPOpenCVSample
             }
         }
 
-        private bool isEnable;
-        public bool IsEnable
+        private bool isSliderEnable;
+        public bool IsSliderEnable
         {
-            get { return isEnable; }
+            get { return isSliderEnable; }
             set
             {
-                isEnable = value;
-                NotifyPropertyChanged("IsEnable");
+                isSliderEnable = value;
+                NotifyPropertyChanged("IsSliderEnable");
             }
         }
+
+        private bool isComboBoxEnable;
+        public bool IsComboBoxEnable
+        {
+            get { return isComboBoxEnable; }
+            set
+            {
+                isComboBoxEnable = value;
+                NotifyPropertyChanged("IsComboBoxEnable");
+            }
+        }
+
 
         private string tag;
         public string Tag
@@ -507,10 +599,41 @@ namespace UWPOpenCVSample
             }
         }
 
+        private List<object> comboList;
+        public List<object> ComboList
+        {
+            get { return comboList; }
+            set
+            {
+                comboList = value;
+                NotifyPropertyChanged("ComboList");
+            }
+        }
+
+        private Type paramType;
+        public Type ParamType
+        {
+            get { return paramType; }
+            set
+            {
+                paramType = value;
+                NotifyPropertyChanged("ParamType");
+            }
+        }
+
+        private List<object> paramList;
+        public List<object> ParamList
+        {
+            get { return paramList; }
+            set
+            {
+                paramList = value;
+                NotifyPropertyChanged("ParamList");
+            }
+        }
         // Converter
 
         // enum val
-        public Type type;
         public List<string> Selections;
         public int selectIndex;
         public bool isInitialize;
@@ -522,9 +645,24 @@ namespace UWPOpenCVSample
             MaxValue = max;
             MinValue = min;
             CurrentValue = cur > max ? max : cur < min ? min : cur;
-            this.type = type;
+            ParamType = type;
+            if (type.BaseType != typeof(Enum))
+            {
+                ParamList = null;
+                IsComboBoxEnable = false;
+                isSliderEnable = true;
+            }
+            else
+            {
+                var _enumval = Enum.GetValues(type).Cast<object>();
+                ParamList = _enumval.ToList();
+                IsComboBoxEnable = true;
+                isSliderEnable = false;
+            }
             selectIndex = index;
-            SettingVisibility = Visibility.Collapsed;
+            SliderVisibility = Visibility.Collapsed;
+            ComboBoxVisibility = Visibility.Collapsed;
+            DetailsVisibility = Visibility.Collapsed;
             isInitialize = false;
             Tag = name;
         }
@@ -534,7 +672,6 @@ namespace UWPOpenCVSample
             this.description = description;
             Selections = selections;
             selectIndex = 0;
-            settingVisibility = Visibility.Collapsed;
         }
 
         public void updateSelectIndex(int idx)

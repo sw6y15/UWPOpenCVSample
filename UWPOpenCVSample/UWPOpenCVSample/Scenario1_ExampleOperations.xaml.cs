@@ -266,7 +266,7 @@ namespace UWPOpenCVSample
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                 if (_storeditem != null && _storedProperty!=null && _storedProperty.IsEnable)
+                 if (_storeditem != null && _storedProperty!=null)
                 {
                     var res = sender as Slider;
                     if (res.Tag.ToString() != _storedProperty.ParameterName)  return;
@@ -335,10 +335,10 @@ namespace UWPOpenCVSample
         {
             if (OperationType.Blur == operationType)
             {
-                if (algorithmProperty.ParameterName == "ksize")
+                if (algorithmProperty.ParameterName == "Ksize")
                 {
                     _storeditem.updateCurrentValue(algorithmProperty);
-                    _storeditem.updateProperty("anchor", AlgorithmPropertyType.maxValue, algorithmProperty.CurrentDoubleValue);
+                    _storeditem.updateProperty("Anchor", AlgorithmPropertyType.maxValue, algorithmProperty.CurrentDoubleValue);
                 }
                 else
                 {
@@ -460,6 +460,11 @@ namespace UWPOpenCVSample
             //{
             //    this.textBlock.Text = "Operation cancelled.";
             //}
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

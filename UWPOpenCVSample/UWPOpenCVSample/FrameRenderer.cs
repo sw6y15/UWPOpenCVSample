@@ -491,15 +491,23 @@ namespace UWPOpenCVSample
             {
                 Mat mInput = SoftwareBitmap2Mat(input);
                 Mat mOutput = new Mat(mInput.Rows, mInput.Cols, MatType.CV_8UC4);
-                Mat gray = mInput.CvtColor(ColorConversionCodes.BGR2GRAY);
+                mInput.CopyTo(mOutput);
+                Mat gray = mInput.CvtColor(ColorConversionCodes.BGRA2GRAY);
                 Mat edges = gray.Canny(50, 200);
+                //Cv2.FindContours(
+                //    edges,
+                //    out OpenCvSharp.Point[][] contours,
+                //    out HierarchyIndex[] outputArray,
+                //    RetrievalModes.Tree,
+                //    ContourApproximationModes.ApproxSimple);
+
                 Cv2.FindContours(
                     edges,
                     out OpenCvSharp.Point[][] contours,
                     out HierarchyIndex[] outputArray,
-                    RetrievalModes.Tree,
-                    ContourApproximationModes.ApproxSimple);
-
+                    (RetrievalModes)algorithm.algorithmProperties[0].CurrentValue,
+                    (ContourApproximationModes)algorithm.algorithmProperties[1].CurrentValue,
+                    (Point)algorithm.algorithmProperties[2].CurrentValue);
                 int maxLen = 0;
                 int maxIdx = -1;
                 for (int i = 0; i < contours.Length; i++)
@@ -513,9 +521,9 @@ namespace UWPOpenCVSample
                         mOutput,
                         contours,
                         i,
-                        new Scalar(0, 0, 255),
-                        3,
-                        LineTypes.Link8,
+                        (Scalar)algorithm.algorithmProperties[3].CurrentValue,
+                        (int)algorithm.algorithmProperties[4].CurrentValue,
+                        (LineTypes)algorithm.algorithmProperties[5].CurrentValue,
                         outputArray,
                         0);
                 }
@@ -528,6 +536,8 @@ namespace UWPOpenCVSample
                 Mat2SoftwareBitmap(mOutput, output);
             }
         }
+
+
 
         public unsafe static Mat SoftwareBitmap2Mat(SoftwareBitmap softwareBitmap)
         {

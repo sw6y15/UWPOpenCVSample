@@ -63,6 +63,8 @@ namespace UWPOpenCVSample
                     new AlgorithmProperty(3,typeof(Scalar),"Color","Line color.",255,0,0),
                     new AlgorithmProperty(4,typeof(int),"Thickness","Line thickness. [By default this is 1]",10,0,1),
                     new AlgorithmProperty(5,typeof(LineTypes),"LineTypes","Type of the line. [By default this is LineType.Link8]",2,0,1),
+                    new AlgorithmProperty(6,typeof(double),"Threshold1","The first threshold for the hysteresis procedure.",255,0,50),
+                    new AlgorithmProperty(7,typeof(double),"Threshold2","The second threshold for the hysteresis procedure.",255,0,200),
                 }
             },
             new Algorithm()

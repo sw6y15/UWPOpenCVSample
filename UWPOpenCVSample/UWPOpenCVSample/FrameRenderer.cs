@@ -493,7 +493,7 @@ namespace UWPOpenCVSample
                 Mat mOutput = new Mat(mInput.Rows, mInput.Cols, MatType.CV_8UC4);
                 mInput.CopyTo(mOutput);
                 Mat gray = mInput.CvtColor(ColorConversionCodes.BGRA2GRAY);
-                Mat edges = gray.Canny(10, 40);
+                Mat edges = gray.Canny((double)algorithm.algorithmProperties[6].CurrentValue, (double)algorithm.algorithmProperties[7].CurrentValue);
                 //Cv2.FindContours(
                 //    edges,
                 //    out OpenCvSharp.Point[][] contours,
@@ -517,20 +517,33 @@ namespace UWPOpenCVSample
                         maxIdx = i;
                         maxLen = contours[i].Length;
                     }
-                    Cv2.DrawContours(
-                        mOutput,
-                        contours,
-                        i,
-                        (Scalar)algorithm.algorithmProperties[3].CurrentValue,
-                        (int)algorithm.algorithmProperties[4].CurrentValue,
-                        (LineTypes)algorithm.algorithmProperties[5].CurrentValue,
-                        outputArray,
-                        0);
+                    if (contours[i].Length>10)
+                    {
+                        Cv2.DrawContours(
+                            mOutput,
+                            contours,
+                            i,
+                            (Scalar)algorithm.algorithmProperties[3].CurrentValue,
+                            (int)algorithm.algorithmProperties[4].CurrentValue,
+                            (LineTypes)algorithm.algorithmProperties[5].CurrentValue,
+                            outputArray,
+                            0);
+
+                    }
                 }
                 if (maxIdx != -1)
                 {
                     var res = Cv2.ApproxPolyDP(contours[maxIdx], 1, true);
-                    //return Cv2.ContourArea(res);
+                    //Cv2.DrawContours(
+                    //    mOutput,
+                    //    contours,
+                    //    maxIdx,
+                    //    (Scalar)algorithm.algorithmProperties[3].CurrentValue,
+                    //    (int)algorithm.algorithmProperties[4].CurrentValue,
+                    //    (LineTypes)algorithm.algorithmProperties[5].CurrentValue,
+                    //    outputArray,
+                    //    0);
+                    ////return Cv2.ContourArea(res);
                 }
                 Cv2.ImShow("Contours", mOutput);
                 Mat2SoftwareBitmap(mOutput, output);

@@ -67,7 +67,7 @@ namespace UWPOpenCVSample
             Blur = 0,
             HoughLines,
             Contours,
-            Histogram,
+            Canny,
             MotionDetector
         }
         OperationType currentOperation;
@@ -145,8 +145,9 @@ namespace UWPOpenCVSample
                         {
                             _helper.Contours(originalBitmap, outputBitmap, _storeditem);
                         }
-                        else if (currentOperation == OperationType.Histogram)
+                        else if (currentOperation == OperationType.Canny)
                         {
+                            _helper.Canny(originalBitmap, outputBitmap, _storeditem);
                         }
                         else if (currentOperation == OperationType.MotionDetector)
                         {
@@ -178,9 +179,10 @@ namespace UWPOpenCVSample
             {
                 this.CurrentOperationTextBlock.Text = "Current: Contours";
             }
-            else if (OperationType.Histogram == currentOperation)
+            else if (OperationType.Canny == currentOperation)
             {
-                this.CurrentOperationTextBlock.Text = "Current: Histogram of RGB channels";
+                this.CurrentOperationTextBlock.Text = "Current: Canny";
+                //this.CurrentOperationTextBlock.Text = "Current: Histogram of RGB channels";
             }
             else if (OperationType.HoughLines == currentOperation)
             {
@@ -293,7 +295,7 @@ namespace UWPOpenCVSample
             {
                 _storeditem.updateCurrentValue(algorithmProperty);
             }
-            else if (OperationType.Histogram == currentOperation)
+            else if (OperationType.Canny == currentOperation)
             {
                 _storeditem.updateCurrentValue(algorithmProperty);
             }

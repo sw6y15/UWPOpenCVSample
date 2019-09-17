@@ -68,12 +68,12 @@ namespace UWPOpenCVSample
             new Algorithm()
             {
 
-                AlgorithmName ="Histogram",
+                AlgorithmName ="Canny",
                 algorithmProperties = new List<AlgorithmProperty>()
                 {
-                    new AlgorithmProperty(0,typeof(double),"threshold1"),
-                    new AlgorithmProperty(1,typeof(double),"threshold2"),
-                    new AlgorithmProperty(2,typeof(double),"threshold3"),
+                    new AlgorithmProperty(0,typeof(double),"Threshold1","The first threshold for the hysteresis procedure.",255,0,50),
+                    new AlgorithmProperty(1,typeof(double),"Threshold2","The second threshold for the hysteresis procedure.",255,0,200),
+                    new AlgorithmProperty(2,typeof(int),"ApertureSize","Aperture size for the Sobel operator [By default this is ApertureSize.Size3]",7,1,3),
                 }
             },
             new Algorithm()

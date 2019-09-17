@@ -493,7 +493,7 @@ namespace UWPOpenCVSample
                 Mat mOutput = new Mat(mInput.Rows, mInput.Cols, MatType.CV_8UC4);
                 mInput.CopyTo(mOutput);
                 Mat gray = mInput.CvtColor(ColorConversionCodes.BGRA2GRAY);
-                Mat edges = gray.Canny(50, 200);
+                Mat edges = gray.Canny(10, 40);
                 //Cv2.FindContours(
                 //    edges,
                 //    out OpenCvSharp.Point[][] contours,
@@ -537,8 +537,23 @@ namespace UWPOpenCVSample
             }
         }
 
+        public void Canny(SoftwareBitmap input, SoftwareBitmap output, Algorithm algorithm)
+        {
+            if (algorithm.AlgorithmName == "Canny")
+            {
+                Mat mInput = SoftwareBitmap2Mat(input);
+                Mat mOutput = new Mat(mInput.Rows, mInput.Cols, MatType.CV_8UC4);
+                mInput.CopyTo(mOutput);
+                Mat gray = mInput.CvtColor(ColorConversionCodes.BGRA2GRAY);
+                Mat edges = gray.Canny((double)algorithm.algorithmProperties[0].CurrentValue, 
+                    (double)algorithm.algorithmProperties[1].CurrentValue,
+                    /*apertureSize*/(int)algorithm.algorithmProperties[2].CurrentValue);
 
-
+                Cv2.ImShow("edges", edges);
+                Mat2SoftwareBitmap(mOutput, output);
+            }
+        }
+    
         public unsafe static Mat SoftwareBitmap2Mat(SoftwareBitmap softwareBitmap)
         {
             using (BitmapBuffer buffer = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Write))

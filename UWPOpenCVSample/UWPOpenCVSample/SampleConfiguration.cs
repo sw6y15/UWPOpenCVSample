@@ -65,6 +65,7 @@ namespace UWPOpenCVSample
                     new AlgorithmProperty(5,typeof(LineTypes),"LineTypes","Type of the line. [By default this is LineType.Link8]",2,0,1),
                     new AlgorithmProperty(6,typeof(double),"Threshold1","The first threshold for the hysteresis procedure.",255,0,50),
                     new AlgorithmProperty(7,typeof(double),"Threshold2","The second threshold for the hysteresis procedure.",255,0,200),
+                    new AlgorithmProperty(8,typeof(int),"Length","The second threshold for the hysteresis procedure.",100,0,10),
                 }
             },
             new Algorithm()

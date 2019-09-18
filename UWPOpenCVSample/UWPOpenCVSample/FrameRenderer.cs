@@ -517,7 +517,7 @@ namespace UWPOpenCVSample
                         maxIdx = i;
                         maxLen = contours[i].Length;
                     }
-                    if (contours[i].Length>10)
+                    if (contours[i].Length> (int)algorithm.algorithmProperties[8].CurrentValue)
                     {
                         Cv2.DrawContours(
                             mOutput,
